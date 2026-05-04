@@ -1,0 +1,235 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AnimaTrack | Renal & FCGS Care</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap');
+        body { font-family: 'Inter', sans-serif; background-color: #f8fafc; }
+        .card { @apply bg-white p-6 rounded-xl shadow-sm border border-slate-200; }
+        .status-pill { @apply px-3 py-1 rounded-full text-xs font-semibold; }
+        .checkbox-custom { @apply w-5 h-5 rounded border-slate-300 text-indigo-600 focus:ring-indigo-500; }
+    </style>
+</head>
+<body class="pb-20">
+
+    <!-- Header -->
+    <header class="bg-indigo-900 text-white py-8 px-6 mb-8 shadow-lg">
+        <div class="max-w-4xl mx-auto flex justify-between items-center">
+            <div>
+                <h1 class="text-3xl font-bold flex items-center gap-2">
+                    <i data-lucide="heart-pulse" class="text-rose-400"></i> AnimaTrack
+                </h1>
+                <p class="text-indigo-200 mt-1">Acute Kidney & FCGS Management Portal</p>
+            </div>
+            <div id="date-display" class="text-right font-mono text-sm opacity-80"></div>
+        </div>
+    </header>
+
+    <main class="max-w-4xl mx-auto px-4 grid grid-cols-1 md:grid-cols-3 gap-6">
+        
+        <!-- Left Col: Condition Monitor -->
+        <section class="md:col-span-1 space-y-6">
+            <h2 class="text-xl font-bold text-slate-800 flex items-center gap-2">
+                <i data-lucide="activity"></i> Diagnostics
+            </h2>
+            
+            <div class="card space-y-4">
+                <div>
+                    <div class="flex justify-between mb-1">
+                        <span class="text-sm font-medium text-slate-600">Acute Kidney Injury</span>
+                        <span class="text-sm font-bold text-rose-600">100%</span>
+                    </div>
+                    <div class="w-full bg-slate-100 h-2 rounded-full">
+                        <div class="bg-rose-500 h-2 rounded-full" style="width: 100%"></div>
+                    </div>
+                </div>
+                <div>
+                    <div class="flex justify-between mb-1">
+                        <span class="text-sm font-medium text-slate-600">FCGS (Immune)</span>
+                        <span class="text-sm font-bold text-orange-500">80%</span>
+                    </div>
+                    <div class="w-full bg-slate-100 h-2 rounded-full">
+                        <div class="bg-orange-500 h-2 rounded-full" style="width: 80%"></div>
+                    </div>
+                </div>
+                <div>
+                    <div class="flex justify-between mb-1">
+                        <span class="text-sm font-medium text-slate-600">Renal Gastrin Hyp.</span>
+                        <span class="text-sm font-bold text-amber-500">70%</span>
+                    </div>
+                    <div class="w-full bg-slate-100 h-2 rounded-full">
+                        <div class="bg-amber-500 h-2 rounded-full" style="width: 70%"></div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Notes/Strategy -->
+            <div class="card bg-indigo-50 border-indigo-100">
+                <h3 class="font-bold text-indigo-900 mb-2 flex items-center gap-1">
+                    <i data-lucide="info" class="w-4 h-4"></i> Strategy
+                </h3>
+                <ul class="text-xs space-y-2 text-indigo-800 italic">
+                    <li>• Start all treatments today (80% confidence)</li>
+                    <li>• Fasting before treating (90% recommended)</li>
+                    <li>• Transition: Start slow (70% weight)</li>
+                </ul>
+            </div>
+        </section>
+
+        <!-- Middle & Right: The Regimen -->
+        <section class="md:col-span-2 space-y-6">
+            <h2 class="text-xl font-bold text-slate-800 flex items-center gap-2">
+                <i data-lucide="clipboard-check"></i> Daily Protocol
+            </h2>
+
+            <!-- Hygiene & Mouth -->
+            <div class="card">
+                <h3 class="text-lg font-semibold text-slate-700 mb-4 border-b pb-2 flex items-center justify-between">
+                    Hygiene (Mouth & Body)
+                    <span class="text-xs bg-emerald-100 text-emerald-700 px-2 py-1 rounded">Daily</span>
+                </h3>
+                <div class="grid grid-cols-1 gap-3" id="hygiene-list">
+                    <!-- Dynamic Saline Rinses (9x) -->
+                </div>
+                <hr class="my-4">
+                <div class="flex flex-wrap gap-4 text-sm text-slate-600">
+                    <label class="flex items-center gap-2"><input type="checkbox" class="checkbox-custom"> Daily Bath (4x/wk)</label>
+                    <label class="flex items-center gap-2"><input type="checkbox" class="checkbox-custom"> Brush Teeth (1x)</label>
+                    <label class="flex items-center gap-2"><input type="checkbox" class="checkbox-custom"> Body Wipe (3x)</label>
+                </div>
+            </div>
+
+            <!-- Nutrition & Meals -->
+            <div class="card">
+                <h3 class="text-lg font-semibold text-slate-700 mb-4 border-b pb-2">
+                    Nutrition: 7 Meals (Small/Frequent)
+                </h3>
+                <p class="text-xs text-slate-500 mb-4">Homemade Renal Diet: Chicken, Rice, Fish Oil (Sardines 100%)</p>
+                <div class="grid grid-cols-2 sm:grid-cols-4 gap-3" id="meal-list">
+                    <!-- Dynamic Meals (7x) -->
+                </div>
+                <div class="mt-4 p-3 bg-amber-50 rounded-lg border border-amber-100 text-xs text-amber-800">
+                    <strong>Note:</strong> Add liquid. Each meal = 20% of bowl. Add CBD (7 drops) and Reishi (7x/day) to meals.
+                </div>
+            </div>
+
+            <!-- Supplements & Tinctures -->
+            <div class="card">
+                <h3 class="text-lg font-semibold text-slate-700 mb-4 border-b pb-2">Medicine & Supplements</h3>
+                <div class="space-y-4">
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                        <div class="p-3 border rounded-lg">
+                            <p class="font-bold text-sm">Andiroba & Copaiba</p>
+                            <div class="flex gap-2 mt-2" id="oil-drops">
+                                <!-- 4 drops each -->
+                            </div>
+                            <p class="text-[10px] text-slate-400 mt-1">1 drop per admin, 4x daily</p>
+                        </div>
+                        <div class="p-3 border rounded-lg">
+                            <p class="font-bold text-sm">MMS (Activated)</p>
+                            <div class="flex gap-2 mt-2" id="mms-drops">
+                                <!-- 3 drops -->
+                            </div>
+                            <p class="text-[10px] text-slate-400 mt-1">1 drop 3x per day</p>
+                        </div>
+                    </div>
+                    
+                    <div class="grid grid-cols-1 sm:grid-cols-3 gap-2 text-sm">
+                        <label class="flex items-center gap-2 p-2 bg-slate-50 rounded"><input type="checkbox" class="checkbox-custom"> Corn Silk (1x)</label>
+                        <label class="flex items-center gap-2 p-2 bg-slate-50 rounded"><input type="checkbox" class="checkbox-custom"> DMSO Gel (1x)</label>
+                        <label class="flex items-center gap-2 p-2 bg-slate-50 rounded"><input type="checkbox" class="checkbox-custom"> Lysine Treats (3x)</label>
+                    </div>
+                </div>
+            </div>
+
+            <button onclick="resetDay()" class="w-full py-3 text-slate-400 hover:text-rose-500 text-sm transition-colors flex items-center justify-center gap-2">
+                <i data-lucide="refresh-cw" class="w-4 h-4"></i> Reset for New Day
+            </button>
+        </section>
+    </main>
+
+    <script>
+        // Data Initialization
+        const dateElement = document.getElementById('date-display');
+        dateElement.textContent = new Date().toLocaleDateString('en-US', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' });
+
+        // Component Generators
+        function initApp() {
+            // Saline Rinses (9x)
+            const hygieneContainer = document.getElementById('hygiene-list');
+            const rinseLabels = ['Wake up', 'Before Meal 1', 'Before Meal 2', 'Before Meal 3', 'Before Meal 4', 'Before Meal 5', 'Before Meal 6', 'Before Meal 7', 'Before Bed'];
+            rinseLabels.forEach((label, i) => {
+                hygieneContainer.innerHTML += `
+                    <label class="flex items-center justify-between p-2 hover:bg-slate-50 rounded transition-colors border-b border-slate-50">
+                        <span class="text-sm text-slate-600 font-medium">Saline Rinse ${i+1} (${label})</span>
+                        <input type="checkbox" class="checkbox-custom" data-id="rinse-${i}">
+                    </label>
+                `;
+            });
+
+            // Meals (7x)
+            const mealContainer = document.getElementById('meal-list');
+            for(let i=1; i<=7; i++) {
+                mealContainer.innerHTML += `
+                    <div class="flex flex-col items-center p-2 border rounded-lg bg-emerald-50/30">
+                        <span class="text-[10px] uppercase font-bold text-slate-400 mb-1">Meal ${i}</span>
+                        <input type="checkbox" class="w-6 h-6 text-emerald-600 rounded-full" data-id="meal-${i}">
+                    </div>
+                `;
+            }
+
+            // Drops (Andiroba/Copaiba 4x, MMS 3x)
+            const oilContainer = document.getElementById('oil-drops');
+            for(let i=1; i<=4; i++) {
+                oilContainer.innerHTML += `<input type="checkbox" title="Dose ${i}" class="checkbox-custom border-indigo-300" data-id="oil-${i}">`;
+            }
+            const mmsContainer = document.getElementById('mms-drops');
+            for(let i=1; i<=3; i++) {
+                mmsContainer.innerHTML += `<input type="checkbox" title="Dose ${i}" class="checkbox-custom border-amber-300" data-id="mms-${i}">`;
+            }
+
+            lucide.createIcons();
+            loadProgress();
+        }
+
+        // Persistence Logic
+        document.addEventListener('change', (e) => {
+            if (e.target.type === 'checkbox') {
+                saveProgress();
+            }
+        });
+
+        function saveProgress() {
+            const checks = document.querySelectorAll('input[type="checkbox"]');
+            const state = {};
+            checks.forEach(c => {
+                if (c.dataset.id) state[c.dataset.id] = c.checked;
+            });
+            localStorage.setItem('animal_care_progress', JSON.stringify(state));
+        }
+
+        function loadProgress() {
+            const saved = localStorage.getItem('animal_care_progress');
+            if (!saved) return;
+            const state = JSON.parse(saved);
+            Object.keys(state).forEach(id => {
+                const el = document.querySelector(`[data-id="${id}"]`);
+                if (el) el.checked = state[id];
+            });
+        }
+
+        function resetDay() {
+            if(confirm("Are you sure you want to clear all progress for today?")) {
+                localStorage.removeItem('animal_care_progress');
+                location.reload();
+            }
+        }
+
+        initApp();
+    </script>
+</body>
+</html>
