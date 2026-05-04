@@ -9,14 +9,15 @@
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap');
         body { font-family: 'Inter', sans-serif; background-color: #f8fafc; }
-        .card { @apply bg-white p-6 rounded-xl shadow-sm border border-slate-200; }
-        .status-pill { @apply px-3 py-1 rounded-full text-xs font-semibold; }
-        .checkbox-custom { @apply w-5 h-5 rounded border-slate-300 text-indigo-600 focus:ring-indigo-500; }
+        .card { @apply bg-white rounded-xl shadow-sm border border-slate-200 overflow-hidden; }
+        .checkbox-custom { @apply w-5 h-5 rounded border-slate-300 text-indigo-600 focus:ring-indigo-500 transition-all; }
         
-        /* Tab Styles */
-        .tab-btn { @apply px-4 py-2 text-sm font-semibold transition-all border-b-2; }
+        /* Tab Interaction Styles */
+        .tab-btn { @apply flex-1 py-3 text-sm font-semibold transition-all border-b-2 flex items-center justify-center gap-2; }
         .tab-active { @apply border-indigo-600 text-indigo-600 bg-indigo-50/50; }
         .tab-inactive { @apply border-transparent text-slate-400 hover:text-slate-600 hover:bg-slate-50; }
+        
+        .hidden-tab { display: none; }
     </style>
 </head>
 <body class="pb-20">
@@ -36,99 +37,97 @@
 
     <main class="max-w-4xl mx-auto px-4 grid grid-cols-1 md:grid-cols-3 gap-6">
         
-        <!-- Left Col: Tabs (Diagnostics vs strategy) -->
-        <section class="md:col-span-1">
-            <div class="card p-0 overflow-hidden sticky top-6">
-                <!-- Tab Navigation -->
-                <div class="flex border-b border-slate-200">
-                    <button onclick="switchTab('diagnostics')" id="tab-diag-btn" class="tab-btn flex-1 tab-active">
-                        <span class="flex items-center justify-center gap-2">
-                            <i data-lucide="activity" class="w-4 h-4"></i> Cause
-                        </span>
+        <!-- Refactored Sidebar: Tabs -->
+        <aside class="md:col-span-1">
+            <div class="card sticky top-6">
+                <!-- Tab Headers -->
+                <div class="flex border-b border-slate-100">
+                    <button onclick="setTab('cause')" id="btn-cause" class="tab-btn tab-active">
+                        <i data-lucide="activity" class="w-4 h-4"></i> Cause
                     </button>
-                    <button onclick="switchTab('strategy')" id="tab-strat-btn" class="tab-btn flex-1 tab-inactive">
-                        <span class="flex items-center justify-center gap-2">
-                            <i data-lucide="info" class="w-4 h-4"></i> Remedy
-                        </span>
+                    <button onclick="setTab('remedy')" id="btn-remedy" class="tab-btn tab-inactive">
+                        <i data-lucide="info" class="w-4 h-4"></i> Remedy
                     </button>
                 </div>
 
-                <!-- Tab Content: Diagnostics -->
-                <div id="tab-diagnostics" class="p-6 space-y-4">
-                    <h2 class="text-sm font-bold uppercase tracking-wider text-slate-400 mb-4">Condition Monitor</h2>
-                    <div>
-                        <div class="flex justify-between mb-1">
-                            <span class="text-sm font-medium text-slate-600">Acute Kidney Injury</span>
-                            <span class="text-sm font-bold text-rose-600">100%</span>
+                <!-- Cause Panel (Diagnostics) -->
+                <div id="panel-cause" class="p-6 space-y-5">
+                    <h2 class="text-xs font-bold uppercase tracking-widest text-slate-400">Diagnostics</h2>
+                    <div class="space-y-4">
+                        <div>
+                            <div class="flex justify-between mb-1">
+                                <span class="text-sm font-medium text-slate-600">Acute Kidney Injury</span>
+                                <span class="text-sm font-bold text-rose-600">100%</span>
+                            </div>
+                            <div class="w-full bg-slate-100 h-2 rounded-full">
+                                <div class="bg-rose-500 h-2 rounded-full" style="width: 100%"></div>
+                            </div>
                         </div>
-                        <div class="w-full bg-slate-100 h-2 rounded-full">
-                            <div class="bg-rose-500 h-2 rounded-full" style="width: 100%"></div>
+                        <div>
+                            <div class="flex justify-between mb-1">
+                                <span class="text-sm font-medium text-slate-600">FCGS (Immune)</span>
+                                <span class="text-sm font-bold text-orange-500">80%</span>
+                            </div>
+                            <div class="w-full bg-slate-100 h-2 rounded-full">
+                                <div class="bg-orange-500 h-2 rounded-full" style="width: 80%"></div>
+                            </div>
                         </div>
-                    </div>
-                    <div>
-                        <div class="flex justify-between mb-1">
-                            <span class="text-sm font-medium text-slate-600">FCGS (Immune)</span>
-                            <span class="text-sm font-bold text-orange-500">80%</span>
-                        </div>
-                        <div class="w-full bg-slate-100 h-2 rounded-full">
-                            <div class="bg-orange-500 h-2 rounded-full" style="width: 80%"></div>
-                        </div>
-                    </div>
-                    <div>
-                        <div class="flex justify-between mb-1">
-                            <span class="text-sm font-medium text-slate-600">Renal Gastrin Hyp.</span>
-                            <span class="text-sm font-bold text-amber-500">70%</span>
-                        </div>
-                        <div class="w-full bg-slate-100 h-2 rounded-full">
-                            <div class="bg-amber-500 h-2 rounded-full" style="width: 70%"></div>
+                        <div>
+                            <div class="flex justify-between mb-1">
+                                <span class="text-sm font-medium text-slate-600">Renal Gastrin Hyp.</span>
+                                <span class="text-sm font-bold text-amber-500">70%</span>
+                            </div>
+                            <div class="w-full bg-slate-100 h-2 rounded-full">
+                                <div class="bg-amber-500 h-2 rounded-full" style="width: 70%"></div>
+                            </div>
                         </div>
                     </div>
                 </div>
 
-                <!-- Tab Content: Strategy -->
-                <div id="tab-strategy" class="p-6 hidden bg-indigo-50/30">
-                    <h2 class="text-sm font-bold uppercase tracking-wider text-indigo-400 mb-4">Treatment Strategy</h2>
-                    <ul class="text-xs space-y-3 text-indigo-900 italic">
+                <!-- Remedy Panel (Strategy) -->
+                <div id="panel-remedy" class="p-6 space-y-4 hidden-tab bg-indigo-50/30">
+                    <h2 class="text-xs font-bold uppercase tracking-widest text-indigo-400">Strategy</h2>
+                    <ul class="text-xs space-y-3 text-indigo-900 italic leading-relaxed">
                         <li class="flex gap-2">
-                            <span class="text-indigo-400">•</span>
+                            <i data-lucide="chevron-right" class="w-3 h-3 mt-0.5 text-indigo-400 shrink-0"></i>
                             <span>Start all treatments today (80% confidence)</span>
                         </li>
                         <li class="flex gap-2">
-                            <span class="text-indigo-400">•</span>
+                            <i data-lucide="chevron-right" class="w-3 h-3 mt-0.5 text-indigo-400 shrink-0"></i>
                             <span>Fasting before treating (90% recommended)</span>
                         </li>
                         <li class="flex gap-2">
-                            <span class="text-indigo-400">•</span>
+                            <i data-lucide="chevron-right" class="w-3 h-3 mt-0.5 text-indigo-400 shrink-0"></i>
                             <span>Transition: Start slow (70% weight)</span>
                         </li>
                     </ul>
                 </div>
             </div>
-        </section>
+        </aside>
 
-        <!-- Middle & Right: The Regimen -->
+        <!-- Right Col: Daily Protocol -->
         <section class="md:col-span-2 space-y-6">
             <h2 class="text-xl font-bold text-slate-800 flex items-center gap-2">
                 <i data-lucide="clipboard-check"></i> Daily Protocol
             </h2>
 
             <!-- Hygiene & Mouth -->
-            <div class="card">
+            <div class="card p-6">
                 <h3 class="text-lg font-semibold text-slate-700 mb-4 border-b pb-2 flex items-center justify-between">
                     Hygiene (Mouth & Body)
                     <span class="text-xs bg-emerald-100 text-emerald-700 px-2 py-1 rounded">Daily</span>
                 </h3>
-                <div class="grid grid-cols-1 gap-3" id="hygiene-list"></div>
-                <hr class="my-4">
+                <div class="grid grid-cols-1 gap-2" id="hygiene-list"></div>
+                <hr class="my-4 border-slate-100">
                 <div class="flex flex-wrap gap-4 text-sm text-slate-600">
-                    <label class="flex items-center gap-2"><input type="checkbox" class="checkbox-custom" data-id="bath"> Daily Bath (4x/wk)</label>
-                    <label class="flex items-center gap-2"><input type="checkbox" class="checkbox-custom" data-id="brush"> Brush Teeth (1x)</label>
-                    <label class="flex items-center gap-2"><input type="checkbox" class="checkbox-custom" data-id="wipe"> Body Wipe (3x)</label>
+                    <label class="flex items-center gap-2 cursor-pointer"><input type="checkbox" class="checkbox-custom" data-id="daily-bath"> Daily Bath (4x/wk)</label>
+                    <label class="flex items-center gap-2 cursor-pointer"><input type="checkbox" class="checkbox-custom" data-id="brush-teeth"> Brush Teeth (1x)</label>
+                    <label class="flex items-center gap-2 cursor-pointer"><input type="checkbox" class="checkbox-custom" data-id="body-wipe"> Body Wipe (3x)</label>
                 </div>
             </div>
 
             <!-- Nutrition & Meals -->
-            <div class="card">
+            <div class="card p-6">
                 <h3 class="text-lg font-semibold text-slate-700 mb-4 border-b pb-2">
                     Nutrition: 7 Meals (Small/Frequent)
                 </h3>
@@ -140,100 +139,106 @@
             </div>
 
             <!-- Supplements & Tinctures -->
-            <div class="card">
+            <div class="card p-6">
                 <h3 class="text-lg font-semibold text-slate-700 mb-4 border-b pb-2">Medicine & Supplements</h3>
                 <div class="space-y-4">
                     <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                        <div class="p-3 border rounded-lg">
-                            <p class="font-bold text-sm">Andiroba & Copaiba</p>
+                        <div class="p-3 border border-slate-100 rounded-lg bg-slate-50/50">
+                            <p class="font-bold text-sm text-slate-700">Andiroba & Copaiba</p>
                             <div class="flex gap-2 mt-2" id="oil-drops"></div>
                             <p class="text-[10px] text-slate-400 mt-1">1 drop per admin, 4x daily</p>
                         </div>
-                        <div class="p-3 border rounded-lg">
-                            <p class="font-bold text-sm">MMS (Activated)</p>
+                        <div class="p-3 border border-slate-100 rounded-lg bg-slate-50/50">
+                            <p class="font-bold text-sm text-slate-700">MMS (Activated)</p>
                             <div class="flex gap-2 mt-2" id="mms-drops"></div>
                             <p class="text-[10px] text-slate-400 mt-1">1 drop 3x per day</p>
                         </div>
                     </div>
                     
                     <div class="grid grid-cols-1 sm:grid-cols-3 gap-2 text-sm">
-                        <label class="flex items-center gap-2 p-2 bg-slate-50 rounded"><input type="checkbox" class="checkbox-custom" data-id="cornsilk"> Corn Silk (1x)</label>
-                        <label class="flex items-center gap-2 p-2 bg-slate-50 rounded"><input type="checkbox" class="checkbox-custom" data-id="dmso"> DMSO Gel (1x)</label>
-                        <label class="flex items-center gap-2 p-2 bg-slate-50 rounded"><input type="checkbox" class="checkbox-custom" data-id="lysine"> Lysine Treats (3x)</label>
+                        <label class="flex items-center gap-2 p-2 bg-white border border-slate-100 rounded-lg shadow-sm cursor-pointer hover:border-indigo-200 transition-colors">
+                            <input type="checkbox" class="checkbox-custom" data-id="corn-silk"> Corn Silk (1x)
+                        </label>
+                        <label class="flex items-center gap-2 p-2 bg-white border border-slate-100 rounded-lg shadow-sm cursor-pointer hover:border-indigo-200 transition-colors">
+                            <input type="checkbox" class="checkbox-custom" data-id="dmso-gel"> DMSO Gel (1x)
+                        </label>
+                        <label class="flex items-center gap-2 p-2 bg-white border border-slate-100 rounded-lg shadow-sm cursor-pointer hover:border-indigo-200 transition-colors">
+                            <input type="checkbox" class="checkbox-custom" data-id="lysine-treats"> Lysine (3x)
+                        </label>
                     </div>
                 </div>
             </div>
 
-            <button onclick="resetDay()" class="w-full py-3 text-slate-400 hover:text-rose-500 text-sm transition-colors flex items-center justify-center gap-2">
+            <button onclick="resetDay()" class="w-full py-3 text-slate-400 hover:text-rose-500 text-sm transition-colors flex items-center justify-center gap-2 hover:bg-rose-50 rounded-lg border border-transparent hover:border-rose-100">
                 <i data-lucide="refresh-cw" class="w-4 h-4"></i> Reset for New Day
             </button>
         </section>
     </main>
 
     <script>
-        // Tab Switching Logic
-        function switchTab(tab) {
-            const diagContent = document.getElementById('tab-diagnostics');
-            const stratContent = document.getElementById('tab-strategy');
-            const diagBtn = document.getElementById('tab-diag-btn');
-            const stratBtn = document.getElementById('tab-strat-btn');
+        // Tab Management
+        function setTab(mode) {
+            const causePanel = document.getElementById('panel-cause');
+            const remedyPanel = document.getElementById('panel-remedy');
+            const causeBtn = document.getElementById('btn-cause');
+            const remedyBtn = document.getElementById('btn-remedy');
 
-            if (tab === 'diagnostics') {
-                diagContent.classList.remove('hidden');
-                stratContent.classList.add('hidden');
-                diagBtn.className = 'tab-btn flex-1 tab-active';
-                stratBtn.className = 'tab-btn flex-1 tab-inactive';
+            if(mode === 'cause') {
+                causePanel.classList.remove('hidden-tab');
+                remedyPanel.classList.add('hidden-tab');
+                causeBtn.className = 'tab-btn tab-active';
+                remedyBtn.className = 'tab-btn tab-inactive';
             } else {
-                diagContent.classList.add('hidden');
-                stratContent.classList.remove('hidden');
-                diagBtn.className = 'tab-btn flex-1 tab-inactive';
-                stratBtn.className = 'tab-btn flex-1 tab-active';
+                causePanel.classList.add('hidden-tab');
+                remedyPanel.classList.remove('hidden-tab');
+                causeBtn.className = 'tab-btn tab-inactive';
+                remedyBtn.className = 'tab-btn tab-active';
             }
         }
 
-        // Data Initialization
+        // Initialization
         const dateElement = document.getElementById('date-display');
         dateElement.textContent = new Date().toLocaleDateString('en-US', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' });
 
         function initApp() {
-            // Saline Rinses (9x)
+            // Build Hygiene Checklist
             const hygieneContainer = document.getElementById('hygiene-list');
-            const rinseLabels = ['Wake up', 'Before Meal 1', 'Before Meal 2', 'Before Meal 3', 'Before Meal 4', 'Before Meal 5', 'Before Meal 6', 'Before Meal 7', 'Before Bed'];
+            const rinseLabels = ['Wake up', 'Meal 1', 'Meal 2', 'Meal 3', 'Meal 4', 'Meal 5', 'Meal 6', 'Meal 7', 'Bedtime'];
             rinseLabels.forEach((label, i) => {
                 hygieneContainer.innerHTML += `
-                    <label class="flex items-center justify-between p-2 hover:bg-slate-50 rounded transition-colors border-b border-slate-50">
-                        <span class="text-sm text-slate-600 font-medium">Saline Rinse ${i+1} (${label})</span>
+                    <label class="flex items-center justify-between p-2 hover:bg-indigo-50/50 rounded transition-colors group cursor-pointer">
+                        <span class="text-sm text-slate-600 font-medium group-hover:text-indigo-700">Saline Rinse ${i+1} (${label})</span>
                         <input type="checkbox" class="checkbox-custom" data-id="rinse-${i}">
                     </label>
                 `;
             });
 
-            // Meals (7x)
+            // Build Meal Checklist
             const mealContainer = document.getElementById('meal-list');
             for(let i=1; i<=7; i++) {
                 mealContainer.innerHTML += `
-                    <div class="flex flex-col items-center p-2 border rounded-lg bg-emerald-50/30">
+                    <div class="flex flex-col items-center p-2 border border-slate-100 rounded-lg bg-emerald-50/20 hover:bg-emerald-50/40 transition-colors">
                         <span class="text-[10px] uppercase font-bold text-slate-400 mb-1">Meal ${i}</span>
-                        <input type="checkbox" class="w-6 h-6 text-emerald-600 rounded-full" data-id="meal-${i}">
+                        <input type="checkbox" class="w-6 h-6 text-emerald-600 rounded-full border-emerald-300 focus:ring-emerald-500 cursor-pointer" data-id="meal-${i}">
                     </div>
                 `;
             }
 
-            // Drops
+            // Build Drop Checklist
             const oilContainer = document.getElementById('oil-drops');
             for(let i=1; i<=4; i++) {
-                oilContainer.innerHTML += `<input type="checkbox" title="Dose ${i}" class="checkbox-custom border-indigo-300" data-id="oil-${i}">`;
+                oilContainer.innerHTML += `<input type="checkbox" title="Dose ${i}" class="checkbox-custom border-indigo-200 cursor-pointer" data-id="oil-${i}">`;
             }
             const mmsContainer = document.getElementById('mms-drops');
             for(let i=1; i<=3; i++) {
-                mmsContainer.innerHTML += `<input type="checkbox" title="Dose ${i}" class="checkbox-custom border-amber-300" data-id="mms-${i}">`;
+                mmsContainer.innerHTML += `<input type="checkbox" title="Dose ${i}" class="checkbox-custom border-amber-200 cursor-pointer" data-id="mms-${i}">`;
             }
 
             lucide.createIcons();
             loadProgress();
         }
 
-        // Persistence Logic
+        // State Management & Persistence
         document.addEventListener('change', (e) => {
             if (e.target.type === 'checkbox') {
                 saveProgress();
@@ -246,11 +251,11 @@
             checks.forEach(c => {
                 if (c.dataset.id) state[c.dataset.id] = c.checked;
             });
-            localStorage.setItem('animal_care_progress', JSON.stringify(state));
+            localStorage.setItem('animatrack_v2_state', JSON.stringify(state));
         }
 
         function loadProgress() {
-            const saved = localStorage.getItem('animal_care_progress');
+            const saved = localStorage.getItem('animatrack_v2_state');
             if (!saved) return;
             const state = JSON.parse(saved);
             Object.keys(state).forEach(id => {
@@ -260,8 +265,8 @@
         }
 
         function resetDay() {
-            if(confirm("Are you sure you want to clear all progress for today?")) {
-                localStorage.removeItem('animal_care_progress');
+            if(confirm("Reset all checkboxes for the new day?")) {
+                localStorage.removeItem('animatrack_v2_state');
                 location.reload();
             }
         }
